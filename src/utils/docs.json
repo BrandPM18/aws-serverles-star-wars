@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "nintendo-quotation-service",
-    "description": "Nintendo quotation project",
+    "title": "AWS Serverless Star Wars",
+    "description": "Project Serverless",
     "contact": {
       "email": "bpalaciosm@uni.pe"
     },
@@ -20,28 +20,28 @@
   ],
   "tags": [
     {
-      "name": "user",
-      "description": "Operations related to the user"
+      "name": "People",
+      "description": "Operations related to the people Star Wars"
     }
   ],
   "paths": {
-    "/users": {
+    "/create-post": {
       "post": {
         "tags": [
-          "user"
+          "People"
         ],
-        "summary": "Save a user in the database",
+        "summary": "Save a people in the database",
         "operationId": "store",
         "requestBody": {
           "$ref": "#/components/requestBodies/DtoUser"
         },
         "responses": {
           "201": {
-            "description": "User successfully stored",
+            "description": "People successfully stored",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/People"
                 }
               }
             }
@@ -52,81 +52,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get all the users in the database",
-        "operationId": "getAll",
-        "responses": {
-          "200": {
-            "description": "All the users in the database",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean",
-                      "default": false
-                    },
-                    "message": {
-                      "type": "object",
-                      "properties": {
-                        "result": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/User"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Delete all the users in the database",
-        "operationId": "deleteAll",
-        "responses": {
-          "200": {
-            "description": "All the users in the database",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultSuccess"
                 }
               }
             }
@@ -144,18 +69,18 @@
         }
       }
     },
-    "/user/{id}": {
+    "/get-people/{peopleId}": {
       "get": {
         "tags": [
-          "user"
+          "People"
         ],
-        "summary": "Get an specific user",
+        "summary": "Get an specific people",
         "operationId": "getOne",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "MongoDB user id",
+            "description": "DynamDB people id",
             "required": true,
             "style": "simple",
             "explode": false,
@@ -166,37 +91,17 @@
         ],
         "responses": {
           "200": {
-            "description": "User stored in the database",
+            "description": "People stored in the database",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/PeopleRequest"
                 }
               }
             }
           },
           "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Invalid request format",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
+            "description": "People not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -206,83 +111,20 @@
             }
           }
         }
-      },
-      "patch": {
+      }
+    },
+    "/get-post": {
+      "get": {
         "tags": [
-          "user"
+          "People"
         ],
-        "summary": "Update the user data",
-        "operationId": "update",
+        "summary": "Get an all people in database",
+        "operationId": "getOne",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "MongoDB user id",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/DtoUser"
-        },
-        "responses": {
-          "200": {
-            "description": "User successfully updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Invalid request format",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Delete one user from the database",
-        "operationId": "delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "MongoDB user id",
+            "description": "People id",
             "required": true,
             "style": "simple",
             "explode": false,
@@ -293,37 +135,17 @@
         ],
         "responses": {
           "200": {
-            "description": "User successfully deleted",
+            "description": "People stored in the database",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DefaultSuccess"
+                  "$ref": "#/components/schemas/People"
                 }
               }
             }
           },
           "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Invalid request format",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
+            "description": "People not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -338,16 +160,39 @@
   },
   "components": {
     "schemas": {
-      "User": {
+      "People": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "lastName": {
+          "postId": {
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "mass": {
+            "type": "string"
+          },
+          "height": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "PeopleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "mass": {
+            "type": "string"
+          },
+          "height": {
             "type": "string"
           }
         }
@@ -371,41 +216,27 @@
       },
       "DefaultError": {
         "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "default": true
-          },
-          "message": {
-            "type": "object",
-            "properties": {
-              "result": {
-                "type": "string"
-              }
-            }
-          }
+        "properties":{
+          "type": "string",
+          "default": "Error en envio"
+        }
         }
       }
     },
     "requestBodies": {
       "DtoUser": {
-        "description": "User name and last name",
+        "description": "People name and last name",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "args": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
+                    "peopleId": {
                       "type": "string"
                     },
-                    "lastName": {
+                    "description": {
                       "type": "string"
                     }
-                  }
-                }
               }
             }
           }
@@ -413,5 +244,4 @@
         "required": true
       }
     }
-  }
 }
