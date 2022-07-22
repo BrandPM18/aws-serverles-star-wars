@@ -22,9 +22,9 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   stage: ${opt:stage, 'dev'}
-  region: ${opt:region, 'us-east-2'}
+  region: ${opt:region, 'us-east-1'}
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     POSTS_TABLE: Posts-${self:provider.stage}
@@ -54,7 +54,20 @@ functions:
           method: get
           path: get-post/{postId}
           cors: true
-
+  createPost:
+    handler: src/functions/createPost.handler
+    events:
+      - http:
+          method: post
+          path: create-post
+          cors: true
+  getPeople:
+    handler: src/functions/getPeople.handler
+    events:
+      - http:
+          method: get
+          path: get-people/{peopleId}
+          cors: true
 resources:
   Resources:
     PostsListTable:
