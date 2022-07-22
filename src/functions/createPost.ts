@@ -4,29 +4,28 @@ import {
   Context,
   APIGatewayProxyResult,
 } from "aws-lambda";
-import * as uuid from "uuid";
+
 import middify from "../middify";
 import formatJSONResponse from "../formatJsonResponse";
-import postService from "../database/service";
+import { PeopleService } from "../service"
 
 export const handler: Handler = middify(
   async (
     event: APIGatewayEvent & CreatePost,
     context: Context
   ): Promise<APIGatewayProxyResult> => {
-    const { title, description } = event.body;
+    const { peopleId,description } = event.body;
 
     try {
-      const postId: string = uuid.v4();
-      const post = await postService.createPost({
-        postId,
-        title,
-        description,
-        active: true,
-        createdAt: new Date().toISOString(),
-      });
-
-      return formatJSONResponse(201, post);
+      const peopleService = new PeopleService(peopleId,description)
+      const result = await peopleService.process({ 
+        type: 'createPeopleDB'
+      })
+      if (typeof result === 'string') {
+        return formatJSONResponse(400, result);
+      } else {
+        return formatJSONResponse(400, result);
+      }
     } catch (err) {
       return formatJSONResponse(400, err);
     }

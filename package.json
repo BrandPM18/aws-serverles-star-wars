@@ -4,7 +4,7 @@
   "description": "Technical challenge with Api Rest Star Wars Serverless AWS",
   "main": "handler.ts",
   "scripts": {
-    "start": "sls offline start",
+    "start": "serverless offline start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {

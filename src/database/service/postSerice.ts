@@ -27,7 +27,7 @@ class PostService {
     return result.Item as Post;
   }
 
-  async createPost(post: Post): Promise<Post> {
+  async createPost(post: PostPeople): Promise<PostPeople> {
     await this.docClient
       .put({
         TableName: this.tableName,

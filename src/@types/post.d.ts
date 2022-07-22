@@ -1,16 +1,24 @@
 interface Post {
+  postId: string,
+  title: string,
+  description: string,
+  active: boolean,
+  createdAt: string,
+}
+
+interface PostPeople {
   postId: string;
-  title: string;
-  description: string;
-  active: boolean;
+  name: string,
+  height: string,
+  mass: string,
+  description: string,
   createdAt: string;
 }
 
-
 interface CreatePost {
   body: {
-    title: string;
-    description: string;
+    peopleId: string
+    description: string,
   };
 }
 
